@@ -2,23 +2,25 @@
   <div>
     <h3>Quantidade de Participantes: {{ totalParticipantes }}</h3>
 
-    <div class="row">
-      <v-select
-        :items="perguntaList"
-        label="Perguntas"
-        v-model="pergunta"
-        item-text="descricao"
-        item-value="id"
-      ></v-select>
-    </div>
+    <v-select
+      :items="perguntaList"
+      label="Dados por Pergunta"
+      v-model="pergunta"
+      item-text="descricao"
+      item-value="id"
+    ></v-select>
 
     <!--Stats cards-->
     <div class="row">
-      <div class="col-md-6 col-xl-2" v-for="opcao in cards" :key="opcao.descricao">
+      <div
+        class="col-md-6 col-xl-2"
+        v-for="(opcao, index) in cards"
+        :key="opcao.id"
+      >
         <stats-card>
           <div class="icon-big text-center" slot="header">
             <i>
-              <img v-bind:src="opcao.id" alt />
+              <img :src="icones[index].icone" :alt="opcao.descricao" />
             </i>
           </div>
           <div class="numbers" slot="content">
@@ -32,32 +34,20 @@
     <!--Charts-->
     <div class="row">
       <div class="col-12">
-        <chart-card
-          title="Estatísticas"
-          sub-title="Por opção na pesquisa"
-          :chart-data="preferencesChart.data"
-          chart-type="Pie"
-        >
-          <div slot="legend">
-            <i class="fa fa-circle text-info"></i> Open
-            <i class="fa fa-circle text-danger"></i> Bounce
-            <i class="fa fa-circle text-warning"></i> Unsubscribe
-          </div>
-        </chart-card>
+        <apexchart width="45%" :options="chartOptions" :series="series">
+        </apexchart>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { StatsCard, ChartCard } from "@/components/index";
-import Chartist from "chartist";
+import { StatsCard } from "@/components/index";
 
-// const API_URL_LISTAR = "http://www.mocky.io/v2/5e6b0b282d00007a008e831d";
+const API_URL_LISTAR = "http://www.mocky.io/v2/5e6b0b282d00007a008e831d";
 
 export default {
   components: {
-    StatsCard,
-    ChartCard
+    StatsCard
   },
   /**
    * Chart data used to render stats, charts. Should be replaced with server data
@@ -66,6 +56,56 @@ export default {
     return {
       totalParticipantes: 100,
       pergunta: 0,
+      chartOptions: {
+        title: {
+          text: "Gráfico NPS"
+        },
+        chart: {
+          type: "pie",
+          width: 500
+        },
+        labels: [],
+
+        dataLabels: {
+          enabled: true,
+          formatter: function(val) {
+            return val + "%";
+          }
+        },
+        legend: {
+          position: "right",
+          offsetY: 0,
+          height: 230,
+          markers: {
+            fillColors: [
+              "rgba(0, 128, 0, 0.55)",
+              "rgba(255, 255, 0, 0.55)",
+              "rgba(255, 0, 0, 0.55)"
+            ]
+          }
+        },
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200
+              },
+              legend: {
+                position: "bottom"
+              }
+            }
+          }
+        ],
+        fill: {
+          colors: [
+            "rgba(0, 128, 0, 0.55)",
+            "rgba(255, 255, 0, 0.55)",
+            "rgba(255, 0, 0, 0.55)"
+          ]
+        }
+      },
+      series: [],
       icones: [
         {
           id: 1,
@@ -104,6 +144,11 @@ export default {
             { id: 3, descricao: "Neutro", valor: 3 },
             { id: 4, descricao: "Insatisfeito", valor: 4 },
             { id: 5, descricao: "Péssimo", valor: 5 }
+          ],
+          opcoesGrafico: [
+            { id: 1, descricao: "Promotores", valor: 3 },
+            { id: 2, descricao: "Neutro", valor: 3 },
+            { id: 3, descricao: "Detratores", valor: 9 }
           ]
         },
         {
@@ -115,6 +160,11 @@ export default {
             { id: 3, descricao: "Neutro", valor: 8 },
             { id: 4, descricao: "Insatisfeito", valor: 9 },
             { id: 5, descricao: "Péssimo", valor: 10 }
+          ],
+          opcoesGrafico: [
+            { id: 1, descricao: "Promotores", valor: 13 },
+            { id: 2, descricao: "Neutro", valor: 8 },
+            { id: 3, descricao: "Detratores", valor: 19 }
           ]
         },
         {
@@ -126,6 +176,11 @@ export default {
             { id: 3, descricao: "Neutro", valor: 13 },
             { id: 4, descricao: "Insatisfeito", valor: 14 },
             { id: 5, descricao: "Péssimo", valor: 15 }
+          ],
+          opcoesGrafico: [
+            { id: 1, descricao: "Promotores", valor: 23 },
+            { id: 2, descricao: "Neutro", valor: 3 },
+            { id: 3, descricao: "Detratores", valor: 29 }
           ]
         },
         {
@@ -137,6 +192,11 @@ export default {
             { id: 3, descricao: "Neutro", valor: 13 },
             { id: 4, descricao: "Insatisfeito", valor: 14 },
             { id: 5, descricao: "Péssimo", valor: 15 }
+          ],
+          opcoesGrafico: [
+            { id: 1, descricao: "Promotores", valor: 3 },
+            { id: 2, descricao: "Neutro", valor: 3 },
+            { id: 3, descricao: "Detratores", valor: 9 }
           ]
         },
         {
@@ -149,6 +209,11 @@ export default {
             { id: 3, descricao: "Neutro", valor: 13 },
             { id: 4, descricao: "Insatisfeito", valor: 14 },
             { id: 5, descricao: "Péssimo", valor: 15 }
+          ],
+          opcoesGrafico: [
+            { id: 1, descricao: "Promotores", valor: 3 },
+            { id: 2, descricao: "Neutro", valor: 3 },
+            { id: 3, descricao: "Detratores", valor: 9 }
           ]
         },
         {
@@ -161,56 +226,45 @@ export default {
             { id: 3, descricao: "Neutro", valor: 13 },
             { id: 4, descricao: "Insatisfeito", valor: 14 },
             { id: 5, descricao: "Péssimo", valor: 15 }
+          ],
+          opcoesGrafico: [
+            { id: 1, descricao: "Promotores", valor: 3 },
+            { id: 2, descricao: "Neutro", valor: 3 },
+            { id: 3, descricao: "Detratores", valor: 9 }
           ]
         }
-      ],
-
-      preferencesChart: {
-        data: {
-          labels: [],
-          series: []
-        },
-        options: {}
-      }
+      ]
     };
   },
 
   methods: {
     updateCardsAndChart: function() {
+      this.chartOptions.labels = [];
+      this.series = [];
       this.cards = this.perguntaList[this.pergunta].opcoes;
-      this.cards.map(opc => {
-        this.preferencesChart.data.labels.push(opc.valor);
-        this.preferencesChart.data.series.push(opc.valor);
+      let opcoesGrafico = this.perguntaList[this.pergunta].opcoesGrafico;
+
+      opcoesGrafico.map(opc => {
+        this.chartOptions.labels.push(opc.descricao);
+        this.series.push(opc.valor);
+      });
+    },
+
+    initialize() {
+      var self = this;
+      this.axios.get(API_URL_LISTAR, {}).then(function(lista) {
+        self.updateCardsAndChart();
       });
     }
-    // initialize() {
-    //   var self=this;
-    //   this.axios.get(API_URL_LISTAR, {}).then(function(lista) {
-    //     self.listaOpcoes.map(opc => {
-    //       self.preferencesChart.data.labels.push(opc.descricao);
-    //       self.preferencesChart.data.series.push(opc.porcentagem);
-    //     })
-    //     this.totalParticipantes = lista.total_participantes;
-    //     this.listaOpcoes = lista.total_por_opcao;
-    //   });
-    // }
   },
 
   watch: {
     pergunta: function(value) {
-      this.cards = this.perguntaList[value].opcoes;
-      this.preferencesChart.data.labels = [];
-      this.preferencesChart.data.series = [];
-      this.cards.map(opc => {
-        this.preferencesChart.data.labels.push(opc.valor);
-        this.preferencesChart.data.series.push(opc.valor);
-      });
-      this.$forceUpdate;
+      this.updateCardsAndChart();
     }
   },
   mounted() {
-    this.updateCardsAndChart();
-    //    this.initialize();
+    this.initialize();
   }
 };
 </script>

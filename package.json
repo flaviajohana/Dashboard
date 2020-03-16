@@ -8,12 +8,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "apexcharts": "^3.16.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.0.0",
     "chartist": "^0.11.0",
     "core-js": "^3.6.4",
     "es6-promise": "^4.2.4",
     "vue": "^2.6.11",
+    "vue-apexcharts": "^1.5.2",
     "vue-axios": "^2.1.5",
     "vue-clickaway": "^2.1.0",
     "vue-notifyjs": "^0.3.0",

@@ -5,6 +5,7 @@ import vuetify from "./plugins/vuetify";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import PaperDashboard from "./plugins/paperDashboard";
+import VueApexCharts from "vue-apexcharts";
 
 Vue.config.productionTip = false;
 axios.interceptors.request.use(
@@ -28,6 +29,7 @@ axios.interceptors.response.use(
 
 Vue.use(VueAxios, axios);
 Vue.use(PaperDashboard);
+Vue.component("apexchart", VueApexCharts);
 
 new Vue({
   vuetify,
