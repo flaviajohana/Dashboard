@@ -1,7 +1,9 @@
 <template>
-  <div class="sidebar"
-       :data-background-color="backgroundColor"
-       :data-active-color="activeColor">
+  <div
+    class="sidebar"
+    :data-background-color="backgroundColor"
+    :data-active-color="activeColor"
+  >
     <!--
             Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black | darkblue"
             Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
@@ -10,29 +12,27 @@
     <div class="sidebar-wrapper" id="style-3">
       <div class="logo">
         <a href="#" class="simple-text">
-            <div class="logo-img">
-                <img src="@/assets/img/vue-logo.png" alt="">
-            </div>
-          {{title}}
+          <div class="logo-img">
+            <img src="@/assets/img/vue-logo.png" alt="" />
+          </div>
+          {{ title }}
         </a>
       </div>
-      <slot>
-
-      </slot>
+      <slot> </slot>
       <ul class="nav">
         <!--By default vue-router adds an active class to each route link. This way the links are colored when clicked-->
         <slot name="links">
-          <sidebar-link v-for="(link,index) in sidebarLinks"
-                        :key="index"
-                        :to="link.path"
-                        :name="link.name"
-                        :icon="link.icon">
+          <sidebar-link
+            v-for="(link, index) in sidebarLinks"
+            :key="index"
+            :to="link.path"
+            :name="link.name"
+            :icon="link.icon"
+          >
           </sidebar-link>
         </slot>
       </ul>
-      <moving-arrow :move-y="arrowMovePx">
-
-      </moving-arrow>
+      <moving-arrow :move-y="arrowMovePx"> </moving-arrow>
     </div>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "Paper Dashboard"
+      default: "Pesquisa de Satisfação"
     },
     backgroundColor: {
       type: String,
@@ -132,5 +132,4 @@ export default {
   }
 };
 </script>
-<style>
-</style>
+<style></style>
