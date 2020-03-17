@@ -1,24 +1,18 @@
-# dashboard
+# Dashboard para Pesquisa de Sastifação
 
-## Project setup
-```
+O sistema de Dashboard tem como objetivo gerar dados estatísticos para pesquisa de satisfação.
+
+Deployment
+# Instalação de dependências
 yarn install
-```
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+# Para execução no ambiente de desenvolvimento
+yarn start (na porta 9000, padrão express.js)
 
-### Compiles and minifies for production
-```
+# Para execução no ambiente de homologação/produção
 yarn build
-```
 
-### Lints and fixes files
-```
-yarn lint
-```
+
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
