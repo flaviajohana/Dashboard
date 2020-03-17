@@ -13,7 +13,8 @@
       <div class="logo">
         <a href="#" class="simple-text">
           <div class="logo-img">
-            <img src="@/assets/img/infostore.jpg" alt="" />
+            <img src="@/assets/img/inf.png" alt="" />
+            
           </div>
           {{ title }}
         </a>
@@ -47,9 +48,9 @@ export default {
     },
     backgroundColor: {
       type: String,
-      default: "black",
+      default: "blue",
       validator: value => {
-        let acceptedValues = ["white", "black", "darkblue"];
+        let acceptedValues = ["white", "blue", "darkblue"];
         return acceptedValues.indexOf(value) !== -1;
       }
     },
@@ -132,4 +133,5 @@ export default {
   }
 };
 </script>
-<style></style>
+<style>
+</style>

@@ -3,7 +3,7 @@
     <!-- <h3>Quantidade de Participantes: {{ totalParticipantes }}</h3> -->
 
     <v-select
-      :items="perguntas"
+      :items="traducaoPerg"
       label="Dados por Pergunta"
       v-model="pergunta"
       item-text="descricao"
@@ -20,7 +20,7 @@
         <stats-card>
           <div class="icon-big text-center" slot="header">
             <i>
-              <!-- <img :src="icones[index].icone" :alt="opcao.descricao" /> -->
+              <img :src="icones[index].icone" :alt="opcao.descricao" />
             </i>
           </div>
           <div class="numbers" slot="content">
@@ -38,12 +38,28 @@
         </apexchart>
       </div>
     </div>
+    <div id="id_legenda" class="legend">
+      <ul>
+        <li class="header">Legenda</li>
+        <li class="treeview">
+          <i class="list-group-item-inline promotor"></i>
+          <span>Promotor</span>
+	      </li>
+        <li class="treeview">
+          <i class="list-group-item-inline neutro"></i>
+          <span>Neutro</span>
+        <li class="treeview">
+          <i class="list-group-item-inline detrator"></i>
+          <span>Detrator</span>
+	      </li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
 import { StatsCard } from "@/components/index";
 
-const API_URL_LISTAR = "http://www.mocky.io/v2/5e6b0b282d00007a008e831d";
+const API_URL_LISTAR = process.env.VUE_APP_URL+"api/v4/frete/feedback/stats";
 
 export default {
   components: {
@@ -56,7 +72,35 @@ export default {
     return {
       totalParticipantes: 1000,
       pergunta: "",
+      traducaoPerg:[
+        {id:"", descricao:"Todos"},
+        {id:"price", descricao:"Preço"},
+        {id:"product_mix", descricao:"Mix Produto"},
+        {id:"customer_service", descricao:"Atendimento ao Cliente"},
+        {id:"delivery_speed", descricao:"Velocidade de Entrega"},
+        {id:"pleasant_environment", descricao:"Ambiente Agradável"},
+        {id:"sales_consultants", descricao:"Consultores de Vendas"},
+        {id:"service_team", descricao:"Equipe de Serviço"},
+        {id:"cash_team", descricao:"Equipe de Caixa"},
+        {id:"delivery_team", descricao:"Equipe de Entrega"},
+        {id:"customer_expectations", descricao:"Expectativas do Cliente"},
+        {id:"new_purchases", descricao:"Novas Compras"},
+        {id:"recommendation", descricao:"Recomendação"},
+      ],
+      traducaoOpc: 
+         {"pessimo":"Péssimo", "insatisfeito":"Insatisfeito", "neutro":"Neutro", "bom":"Bom", "excelente":"Excelente"}
+      ,
       chartOptions: {
+        plotOptions: {
+          pie: {
+            customScale: 1,
+            offsetX: 0,
+            offsetY: 0,
+            dataLabels: {
+              minAngleToShowLabel: 1
+          }, 
+          }
+        },
         title: {
           text: "Gráfico NPS"
         },
@@ -74,16 +118,6 @@ export default {
         },
         legend: {
           show: false
-          // position: "right",
-          // offsetY: 0,
-          // height: 230,
-          // markers: {
-          //   fillColors: [
-          //   "rgba(50,205,50)",
-          //   "rgba(255,255,0)",
-          //   "rgba(255,0,0)"
-          //   ]
-          // }
         },
         responsive: [
           {
@@ -100,9 +134,9 @@ export default {
         ],
         fill: {
           colors: [
-            "rgba(50,205,50)",
-            "rgba(255,255,0)",
-            "rgba(255,0,0)"
+            "rgb(50,205,50)",
+            "rgb(255,255,0)",
+            "rgb(255,0,0)"
           ]
         }
       },
@@ -139,78 +173,7 @@ export default {
       ],
       cards: [],
       perguntas: [],
-      perguntaList:  {
-        "pessimo": {
-            "price": 0,
-            "product_mix": 0,
-            "customer_service": 0,
-            "delivery_speed": 0,
-            "pleasant_environment": 0,
-            "sales_consultants": 0,
-            "service_team": 0,
-            "cash_team": 0,
-            "delivery_team": 0,
-            "customer_expectations": 0,
-            "new_purchases": 0,
-            "recommendation": 0
-        },
-        "insatisfeito": {
-            "price": 0,
-            "product_mix": 0,
-            "customer_service": 1,
-            "delivery_speed": 0,
-            "pleasant_environment": 0,
-            "sales_consultants": 0,
-            "service_team": 0,
-            "cash_team": 0,
-            "delivery_team": 0,
-            "customer_expectations": 0,
-            "new_purchases": 0,
-            "recommendation": 0
-        },
-        "neutro": {
-            "price": 1,
-            "product_mix": 0,
-            "customer_service": 1,
-            "delivery_speed": 0,
-            "pleasant_environment": 0,
-            "sales_consultants": 1,
-            "service_team": 0,
-            "cash_team": 0,
-            "delivery_team": 1,
-            "customer_expectations": 0,
-            "new_purchases": 0,
-            "recommendation": 0
-        },
-        "bom": {
-            "price": 1,
-            "product_mix": 2,
-            "customer_service": 0,
-            "delivery_speed": 0,
-            "pleasant_environment": 1,
-            "sales_consultants": 1,
-            "service_team": 1,
-            "cash_team": 0,
-            "delivery_team": 0,
-            "customer_expectations": 1,
-            "new_purchases": 0,
-            "recommendation": 0
-        },
-        "excelente": {
-            "price": 1,
-            "product_mix": 1,
-            "customer_service": 1,
-            "delivery_speed": 3,
-            "pleasant_environment": 2,
-            "sales_consultants": 1,
-            "service_team": 2,
-            "cash_team": 3,
-            "delivery_team": 2,
-            "customer_expectations": 2,
-            "new_purchases": 3,
-            "recommendation": 3
-        }
-    }
+      perguntaList: {}
     };
   },
 
@@ -238,7 +201,7 @@ export default {
           }else if(item == "pessimo" || item == "insatisfeito"){
             detrator += total;
           }
-          self.cards.push({descricao: item, valor: total });
+          self.cards.push({descricao: self.traducaoOpc[item], valor: total });
         });
       }else{
         Object.keys(this.perguntaList).forEach(function(item){
@@ -246,7 +209,7 @@ export default {
           Object.keys(self.perguntaList[item]).forEach(function(inner){
             if(inner == self.pergunta){
               total += self.perguntaList[item][inner];
-              self.cards.push({descricao: item, valor: total });
+              self.cards.push({descricao: self.traducaoOpc[item], valor: total });
             }
           });
           if(item == "excelente" || item == "bom"){
@@ -266,23 +229,25 @@ export default {
       this.series.push(neutro);
       this.series.push(detrator);
     },
-    loadQuestions: function(){
-      var self = this;
-      self.perguntas.push("");
-      Object.keys(self.perguntaList).forEach(function(item){
-        let total = 0;
-        Object.keys(self.perguntaList[item]).forEach(function(inner){
-          if(!self.perguntas.includes(inner)){
-            self.perguntas.push(inner);
-          }
-        });
-      });
-    },
+    // loadQuestions: function(){
+    //   var self = this;
+    //   self.perguntas.push("");
+    //   Object.keys(self.perguntaList).forEach(function(item){
+    //     let total = 0;
+    //     Object.keys(self.perguntaList[item]).forEach(function(inner){
+    //       if(!self.perguntas.includes(inner)){
+    //         self.perguntas.push(inner);
+    //       }
+    //     });
+    //   });
+    // },
     initialize() {
       var self = this;
-      this.axios.get(API_URL_LISTAR, {}).then(function(lista) {
+      this.axios.get(API_URL_LISTAR, {}).then(function(resultado) {
+        self.perguntaList = resultado.data.result;
+        console.log(resultado)
         self.updateCardsAndChart();
-        self.loadQuestions();
+        // self.loadQuestions();
       });
     }
   },
@@ -297,4 +262,26 @@ export default {
   }
 };
 </script>
-<style></style>
+<style>
+ul{
+  list-style-type: none;
+}
+.list-group-item-inline {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    /* border-radius: 3px; */
+    border-radius: 15px;
+    border: 1px solid none;
+}
+.detrator{
+    background-color: rgba(255,0,0) !important;
+}
+.promotor {
+    background-color: rgba(50,205,50) !important;
+}
+.neutro  {
+    background-color: rgba(255,255,0) !important;
+}
+</style>
