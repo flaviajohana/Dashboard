@@ -7,7 +7,7 @@ Deployment
 yarn install
 
 # Para execução no ambiente de desenvolvimento
-yarn start (na porta 9000, padrão express.js)
+yarn start
 
 # Para execução no ambiente de homologação/produção
 yarn build
