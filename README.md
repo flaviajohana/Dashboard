@@ -1,6 +1,6 @@
 # Dashboard para Pesquisa de Sastifação
 
-O sistema de Dashboard tem como objetivo gerar dados estatísticos para pesquisa de satisfação.
+O Dashboard tem como objetivo gerar dados estatísticos para pesquisa de satisfação.
 
 Deployment
 # Instalação de dependências
