@@ -16,7 +16,7 @@
         <stats-card>
           <div class="icon-big text-center" slot="header">
             <i>
-              <img :src="icones[index].icone" :alt="opcao.descricao" />
+              <img class="icone" :src="icones[index].icone" :alt="opcao.descricao" />
             </i>
           </div>
           <div class="numbers" slot="content">
@@ -37,16 +37,24 @@
       <ul>
         <li class="header">Legenda</li>
         <li class="treeview">
-          <img src="/imagens/emogis-05.png" alt="promotor" />
+          <i class="list-group-item-inline promotor"></i>
           <span>Promotor</span>
+          (
+          <img class="icone" src="/imagens/emogis-05.png" alt="promotor_1" />
+          <img class="icone" src="/imagens/emogis-06.png" alt="promotor_2" />)
         </li>
         <li class="treeview">
-          <img src="/imagens/emogis-04.png" alt="neutro" />
+          <i class="list-group-item-inline neutro"></i>
           <span>Neutro</span>
+          (
+          <img class="icone" src="/imagens/emogis-04.png" alt="neutro" />)
         </li>
         <li class="treeview">
-          <img src="/imagens/emogis-02.png" alt="detrator" />
+          <i class="list-group-item-inline detrator"></i>
           <span>Detrator</span>
+          (
+          <img class="icone" src="/imagens/emogis-02.png" alt="detrator_1" />
+          <img class="icone" src="/imagens/emogis-03.png" alt="detrator_2" />)
         </li>
       </ul>
     </div>
@@ -261,11 +269,17 @@ ul {
   float: left;
   width: 20px;
   height: 20px;
+  margin-top: 10px;
   margin-right: 5px;
   /* border-radius: 3px; */
   border-radius: 15px;
   border: 1px solid none;
 }
+
+.list-group-item-inline > span {
+  margin-left: 25px;
+}
+
 .detrator {
   background-color: rgba(255, 0, 0) !important;
 }
@@ -276,7 +290,7 @@ ul {
   background-color: rgba(255, 255, 0) !important;
 }
 
-.icon-big > img {
+.icone {
   width: 50px;
 }
 </style>
